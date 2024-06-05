@@ -21,13 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mo5#i43fq2x3#r!$pshc5m&@d)$a=hwh8wqr0^u=wstvsay6z8'  # noqa
+SECRET_KEY = 'django-insecure-mo5#i43fq2x3#r!$5m&@d)$a=hwh8wqr0^u=6z8'
+# SECRET_KEY = os.environ.get(
+#     "SECRET_KEY",
+#     'django-insecure-mo5#i43fq2x3#r!$5m&@d)$a=hwh8wqr0^u=6z8'
+# )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = bool(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 # Application definition
 
@@ -85,6 +90,16 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.environ.get("DB1_ENGINE", "django.db.backends.sqlite3"),
+#         "NAME": os.environ.get("DB1_DATABASE", BASE_DIR / "db.sqlite3"),
+#         "USER": os.environ.get("DB1_USER", "user"),
+#         "PASSWORD": os.environ.get("DB1_PASSWORD", "password"),
+#         "HOST": os.environ.get("DB1_HOST", "localhost"),
+#         "PORT": os.environ.get("DB1_PORT", "5432"),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -126,13 +141,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR / "static"),
 ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

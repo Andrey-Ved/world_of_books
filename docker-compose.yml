@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+#  db1:
+#    image: postgres:14.6-alpine
+#    restart: always
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - db1_data:/var/lib/postgresql/data/
+#    env_file:
+#      - ./config/.env.insecure
+#    environment:
+#      - POSTGRES_DB=${DB1_DATABASE}
+#      - POSTGRES_USER=${DB1_USER}
+#      - POSTGRES_PASSWORD=${DB1_PASSWORD}
+#    networks:
+#      - db_network
+
+#  redis:
+#    image: redis:7.0.5-alpine
+#    hostname: redis
+#    restart: always
+#    networks:
+#      - db_network
+
+  django_app:
+    build:
+      context: .
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./config/.env.insecure
+    volumes:
+      - ./WorldOfBooks:/WorldOfBooks
+    command: gunicorn WorldOfBooks.wsgi:application --bind 0.0.0.0:8000
+    networks:
+#      - db_network
+      - nginx_network
+#    depends_on:
+#      - db1
+#      - redis
+
+  nginx:
+    image: nginx:1.13
+    ports:
+      - 80:80
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./WorldOfBooks/static:/opt/services/djangoapp/static
+      - ./WorldOfBooks/media:/opt/services/djangoapp/media
+    networks:
+      - nginx_network
+    depends_on:
+      - django_app
+
+networks:
+#  db_network:
+#    driver: bridge
+  nginx_network:
+    driver: bridge
+
+#volumes:
+#  db1_data:

@@ -5,6 +5,7 @@
 Пример простого веб-сайта написанный на Django с использованием Bootstrap.  
 По материалам книги **Анатолия Постолита "Python, Django и Bootstrap для начинающих"**
 
+
 ### Установка
 
 - Скопируйте файлы проекта.
@@ -14,6 +15,11 @@ $ python -m venv venv
 $ source env/bin/activate
 $ pip install -r requirements.txt
 ```
+
+### Суперпользователь
+
+Superuser в приложенной БД уже создан - имя asd, пароль asd
+
 
 ### Запуск
 
@@ -26,11 +32,17 @@ $ cd WorldOfBooks
 $ python manage.py runserver
 ```
 
-### Суперпользователь
+### Запуск в Докере
 
-Superuser в приложенной БД уже создан - имя asd, пароль asd
-
-### Интерфейсы
-
-- development - http://127.0.0.1:8000/
-- admin site - http://127.0.0.1:8000/admin/
+Создание и запуск контейнеров:
+```bash
+$ docker-compose up
+```
+Остановка запущенных контейнеров:
+```bash
+$ docker-compose stop
+```
+Запуск остановленных контейнеров:
+```bash
+$ docker-compose start
+```
